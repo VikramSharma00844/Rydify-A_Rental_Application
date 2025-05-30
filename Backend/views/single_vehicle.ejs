@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+    <%-include('partials/head_includes')%>
+    <style>
+
+
+    </style>
+</head>
+<body onload="fetchSingleVehicle(<%=id%>)">
+<%-include('partials/header')%>
+<!-- Page Header Start -->
+<div class="page-header bg-section parallaxie">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <!-- Page Header Box Start -->
+                <div class="page-header-box">
+                    <h1 class="text-anime-style-3" data-cursor="-opaque">Single Vehicle Page</h1>
+                    <nav class="wow fadeInUp">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/">home</a></li>
+<!--                            <li class="active" aria-current="page">luxury car</li>-->
+                        </ol>
+                    </nav>
+                </div>
+                <!-- Page Header Box End -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Page Header End -->
+
+<!-- Page Feets Single Start -->
+<div class="page-fleets-single">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <!-- Feets Single Sidebar Start -->
+                <div class="fleets-single-sidebar">
+                    <div class="fleets-single-sidebar-box wow fadeInUp">
+                        <!-- Feets Single Sidebar Pricing Start -->
+                        <div class="fleets-single-sidebar-pricing">
+                            <h3 id="rent" class="text-center"></h3>
+                        </div>
+                        <!-- Feets Single Sidebar Pricing End -->
+
+                        <!-- Feets Single Sidebar List Start -->
+                        <div class="fleets-single-sidebar-list">
+                            <ul>
+                                <li>* Vehicle Name:-<span id="name"></span></li>
+                                <li>* Vehicle Model:-<span id="model"></span></li>
+                                <li>* Vehicle Brand:-<span id="brand"></span></li>
+                                <li style="margin-bottom: 10px;">* Vehicle Description:-</li>
+                                <div id="description" style="margin-left: 60px;"></div>
+
+                            </ul>
+                        </div>
+                        <!-- Feets Single Sidebar List End -->
+
+                        <!-- Feets Single Sidebar Btn Start -->
+                        <div class="fleets-single-sidebar-btn">
+                            <a onclick="booknow(<%=id%>)" class="btn-default popup-with-form " style="margin-left: 50px;" >book now</a>
+
+                        </div>
+                        <!-- Feets Single Sidebar Btn End -->
+                    </div>
+
+                </div>
+                <!-- Feets Single Sidebar End -->
+            </div>
+
+            <div class="col-lg-8">
+                <!-- Feets Single Content Start -->
+                <div class="fleets-single-content">
+                    <!-- Feets Single Slider Start -->
+                    <div class="fleets-single-slider">
+                        <div class="swiper">
+                            <div class="swiper-wrapper">
+                                <!-- Fleets Image Slide Start -->
+                                <div class="swiper-slide">
+                                    <div class="fleets-slider-image">
+                                        <figure class="image-anime text-center">
+                                            <img src="" id="image"  alt="" style="width: 400px;">
+                                        </figure>
+                                    </div>
+                                </div>
+                                <!-- Fleets Image Slide End -->
+
+                            </div>
+                            <div class="swiper-pagination"></div>
+                        </div>
+                    </div>
+                    <!-- Feets Single Slider End -->
+
+                    <!-- Feets Benefits Start -->
+                    <div class="fleets-benefits wow fadeInUp">
+                        <!-- Feets Benefits Item Start -->
+                        <div class="fleets-benefits-item">
+                            <div class="icon-box">
+                                <img src="/images/icon-fleets-benefits-1.svg" alt="">
+                            </div>
+                            <div class="fleets-benefits-content">
+                                <h3>Unlimited KMs</h3>
+                                <p>Endless Km with no extra charge </p>
+                            </div>
+                        </div>
+                        <!-- Feets Benefits Item End -->
+
+
+                    </div>
+                    <!-- Feets Benefits End -->
+
+                    <!-- Feets Information Start -->
+                    <div class="fleets-information">
+                        <!-- Section Title Start -->
+                        <div class="section-title">
+                            <h3 class="wow fadeInUp">general information</h3>
+                            <h2 class="text-anime-style-3" data-cursor="-opaque">Know about our Vehicle service</h2>
+                            <p class="wow fadeInUp" data-wow-delay="0.25s">Lorem pretium fermentum quam, sit amet cursus ante sollicitudin velen morbi consesua the miss sustion consation porttitor orci sit amet iaculis nisan. Lorem pretium fermentum quam sit amet cursus ante sollicitudin velen fermen morbinetion consesua the risus consequation the porttiton.</p>
+                        </div>
+                        <!-- Section Title End -->
+
+                        <!-- Feets Information List Start -->
+                        <div class="fleets-information-list wow fadeInUp" data-wow-delay="0.5s">
+                            <ul>
+                                <li>24/7 Roadside Assistance</li>
+                                <li>Free Cancellation & Return</li>
+                                <li>Rent Now Pay When You Arrive</li>
+                            </ul>
+                        </div>
+                        <!-- Feets Information List End -->
+                    </div>
+                    <!-- Feets Information End -->
+
+                </div>
+                <!-- Feets Single Content End -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Page Feets Single End -->
+
+<!-- Our Testiminial Start -->
+<div class="our-testimonial">
+    <div class="container">
+        <div class="row section-row">
+            <div class="col-lg-12">
+                <!-- Section Title Start -->
+                <div class="section-title">
+                    <!--                    <h3 class="wow fadeInUp">testimonials</h3>-->
+                    <h2 class="text-anime-style-3" data-cursor="-opaque">Vehicle Reviews</h2>
+                </div>
+                <!-- Section Title End -->
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-lg-12">
+                <!-- Testimonial Slider Start -->
+                <div class="testimonial-slider">
+                    <div class="swiper">
+                        <div class="swiper-wrapper" data-cursor-text="Drag" id="reviews">
+                            <!-- Testimonial Slide Start -->
+                            <div class="swiper-slide">
+                                <div class="testimonial-item">
+                                    <div class="testimonial-header">
+                                        <div class="testimonial-rating">
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-regular fa-star"></i>
+                                        </div>
+                                        <div class="testimonial-content">
+                                            <p>Renting a vehicle from nova ride was a great decision. Not only did I get a reliable and comfortable vehicle, but the prices were also very competitive.</p>
+                                        </div>
+                                    </div>
+                                    <div class="testimonial-body">
+                                        <div class="author-image">
+                                            <figure class="image-anime">
+                                                <img src="images/author-2.jpg" alt="">
+                                            </figure>
+                                        </div>
+                                        <div class="author-content">
+                                            <h3>annette black</h3>
+                                            <p>project manager</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Testimonial Slide End -->
+
+                            <!-- Testimonial Slide Start -->
+                            <div class="swiper-slide">
+                                <div class="testimonial-item">
+                                    <div class="testimonial-header">
+                                        <div class="testimonial-rating">
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-regular fa-star"></i>
+                                        </div>
+                                        <div class="testimonial-content">
+                                            <p>Renting a car from nova ride was a great decision. Not only did I get a reliable and comfortable vehicle, but the prices were also very competitive.</p>
+                                        </div>
+                                    </div>
+                                    <div class="testimonial-body">
+                                        <div class="author-image">
+                                            <figure class="image-anime">
+                                                <img src="images/author-2.jpg" alt="">
+                                            </figure>
+                                        </div>
+                                        <div class="author-content">
+                                            <h3>annette black</h3>
+                                            <p>project manager</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Testimonial Slide End -->
+
+                            <!-- Testimonial Slide Start -->
+                            <div class="swiper-slide">
+                                <div class="testimonial-item">
+                                    <div class="testimonial-header">
+                                        <div class="testimonial-rating">
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-regular fa-star"></i>
+                                            <i class="fa-regular fa-star"></i>
+                                        </div>
+                                        <div class="testimonial-content">
+                                            <p>Renting a car from nova ride was a great decision. Not only did I get a reliable and comfortable vehicle, but the prices were also very competitive.</p>
+                                        </div>
+                                    </div>
+                                    <div class="testimonial-body">
+                                        <div class="author-image">
+                                            <figure class="image-anime">
+                                                <img src="images/author-3.jpg" alt="">
+                                            </figure>
+                                        </div>
+                                        <div class="author-content">
+                                            <h3>leslie alexander</h3>
+                                            <p>project manager</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Testimonial Slide End -->
+
+                            <!-- Testimonial Slide Start -->
+                            <div class="swiper-slide">
+                                <div class="testimonial-item">
+                                    <div class="testimonial-header">
+                                        <div class="testimonial-rating">
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                            <i class="fa-solid fa-star"></i>
+                                        </div>
+                                        <div class="testimonial-content">
+                                            <p>Renting a car from nova ride was a great decision. Not only did I get a reliable and comfortable vehicle, but the prices were also very competitive.</p>
+                                        </div>
+                                    </div>
+                                    <div class="testimonial-body">
+                                        <div class="author-image">
+                                            <figure class="image-anime">
+                                                <img src="images/author-4.jpg" alt="">
+                                            </figure>
+                                        </div>
+                                        <div class="author-content">
+                                            <h3>alis white</h3>
+                                            <p>project manager</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Testimonial Slide End -->
+                        </div>
+                        <div class="testimonial-btn">
+                            <div class="testimonial-button-prev"></div>
+                            <div class="testimonial-button-next"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Testimonial Slider End -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Our Testiminial End -->
+
+<%-include('partials/footer')%>
+<%-include('partials/body_includes')%>
+<script src="/checkuser.js"></script>
+<script src="/checkdealer.js"></script>
+<script>
+
+    $(document).ready(()=>
+    {
+        checkuser();
+        checkdealer();
+        fetchCategoryFilter();
+    });
+    async function fetchSingleVehicle(id)
+    {
+        fetchReview(id);
+        var res=await fetch("/fetchSingle/"+id);
+        res=await res.json();
+        var records=res.records;
+        // console.log(records);
+        document.getElementById("image").src=records.car_photo;
+        document.getElementById("rent").innerText="Rs."+records.rent_per_day+"/day";
+        document.getElementById("name").innerText=records.name;
+        document.getElementById("model").innerText=records.vehicle_model;
+        document.getElementById("brand").innerText=records.vehicle_brand;
+        document.getElementById("description").innerText=records.description;
+    }
+    async function booknow(id)
+    {
+        window.location.href='/user/booking/'+id;
+    }
+    async function fetchReview(id)
+    {
+        var res=await fetch('/fetchreviews/'+id);
+        res=await res.json();
+        var records=res.records;
+        // console.log(records);
+        var html=``;
+        for(var x of records)
+        {
+            html+=`<div class="swiper-slide">
+                                <div class="testimonial-item">
+                                    <div class="testimonial-header">
+                                        <div class="testimonial-rating">`
+            for(var i=1; i<=x.rating; i++)
+            {
+                html+=` <i class="fa-solid fa-star"></i>`;
+            }
+            for(var i=1; i<=5-x.rating; i++)
+            {
+                html+=` <i class="fa-regular fa-star"></i>`;
+            }
+            html+=`</div>
+                                        <div class="testimonial-content">
+                                            <h5>${x.user.first_name} ${x.user.last_name}</h5>
+                                            <p> ${x.feedback}</p>
+                                        </div>
+                                    </div>
+                                    <div class="testimonial-body">
+                                        <div class="author-image">
+                                            <figure class="image-anime">
+                                                <img src="${x.vehicle.car_photo}" alt="">
+                                            </figure>
+                                        </div>
+                                        <div class="author-content">
+                                            <h3>${x.vehicle.name} </h3>
+                                            <p>${x.vehicle.vehicle_model}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>`;
+        }
+        document.getElementById("reviews").innerHTML=html;
+    }
+</script>
+</body>
+</html>

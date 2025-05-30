@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <%-include('../partials/head_includes')%>
+    <style>
+        .error
+        {
+            color:red;
+        }
+
+
+
+        /* Reduce margin between cards (if multiple rows) */
+        .row .col-lg-4 {
+            margin-bottom: 10px; /* Reduce spacing between cards */
+        }
+
+        /* Compact Card Design */
+        .card-custom {
+            padding: 12px; /* Reduce padding inside card */
+        }
+
+        /* Reduce spacing between Approve/Reject buttons */
+        .btn-container {
+            margin-top: 5px; /* Bring buttons closer */
+        }
+
+        .card-img-top {
+            width: 200px; /* Set fixed width */
+            height:200px; /* Set fixed height */
+            /*object-fit: cover; !* Keep the image properly scaled *!*/
+            border-radius: 10px; /* Optional: Rounded corners */
+            display: block;
+            margin: 0 auto 10px auto; /* Center image */
+        }
+        .card {
+            background-color: #f0f0f0;
+            border-radius: 30px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+
+        }
+        .text-highlight,p
+        {
+            color:black;
+        }
+        .card-custom {
+
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease-in-out;
+            overflow: hidden;
+            border-radius: 15px;
+        }
+
+        .card-custom:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 0px 25px rgba(255, 0, 0, 0.9);
+        }
+    </style>
+</head>
+<body onload="fetchDealers()">
+<%-include('../partials/admin_header')%>
+<!--view dealers-->
+<div class="container mt-4">
+    <div class="row justify-content-center" id="cards">
+
+    </div>
+</div>
+
+<%-include('../partials/footer')%>
+<%-include('../partials/body_includes')%>
+<script src="/js/email.js"></script>
+<script>
+    async function fetchDealers()
+    {
+        var res=await fetch('/admin/fetchDealers');
+        res=await res.json();
+        var records=res.records;
+        var html=``;
+        for(var x of records)
+        {
+            html+=`<div class="col-lg-4 col-md-6 mb-4">
+            <div class="card card-custom text-white">
+                <img src="${x.photo}" class="card-img-top" alt="Dealer Photo">
+                <div class="card-body">
+                    <h4 class="text-highlight">${x.name}</h4>
+                    <p><span class="text-highlight">Email:</span> ${x.email}</p>
+                    <p><span class="text-highlight">Gender:</span> ${x.gender}</p>
+                    <p><span class="text-highlight">Mobile:</span> ${x.mobile}</p>
+                    <p><span class="text-highlight">Aadhaar Card:</span> ${x.adhar_card}</p>
+                    <p><span class="text-highlight">PAN Card:</span> ${x.pan_card}</p>
+                    <p><span class="text-highlight">Address:</span> ${x.address}</p>
+                    <p><span class="text-highlight">City:</span> ${x.city}</p>
+                   `
+                if(x.status=='Inactive')
+                {
+                    html+=`<p class="mb-3"><span class="text-highlight">Status:</span> <span class="badge bg-danger text-dark">${x.status}</span></p>
+                    <div class="d-flex justify-content-between">
+                    <button class="btn btn-success btn-approve" onclick="updateDealers(${x.id},'Active','${x.name}','${x.email}')">Active</button>`;
+                }
+                else
+                {
+                    html+=` <p class="mb-3"><span class="text-highlight">Status:</span> <span class="badge bg-success text-dark">${x.status}</span></p>
+                    <div class="d-flex justify-content-between">
+                    <button class="btn btn-danger " onclick="updateDealers(${x.id},'Inactive','${x.name}','${x.email}')">Inactive</button>`;
+                }
+                html+=`<button class="btn btn-danger " onclick="deleteDealer(${x.id})">Delete</button></div>`;
+
+                html+=` </div>
+                </div>
+            </div>
+        </div>`;
+
+        }
+        document.getElementById("cards").innerHTML=html;
+    }
+    async function updateDealers(id,status,name,email)
+    {
+        var res=await fetch('/admin/update_dealerstatus/'+id,{
+            method:'PUT',
+            headers:{'Content-Type':'application/json'},
+            body:JSON.stringify(
+                {
+                    status:status
+                })
+        })
+        res=await res.json();
+        if(res.error)
+        {
+            Qual.errordb("Error",res.message);
+        }
+        else
+        {
+
+            var mailStatus="";
+            if(status=='Active')
+            {
+                mailStatus='Approved';
+            }
+            else
+            {
+                mailStatus='Rejected';
+            }
+            sendMail(email,name,mailStatus);
+            fetchDealers();
+        }
+    }
+    async function deleteDealer(id)
+    {
+        try {
+            //agar hum method type nahi denge to get se delete hoga
+            var res = await fetch("/admin/delete_dealer/"+id,{method:'DELETE'});
+            res = await res.json();
+            if(res.error)
+            {
+                Qual.errordb("Error",res.message);
+            }
+            else
+            {
+                Qual.successdb("Success",res.message);
+                fetchDealers();
+            }
+        }
+        catch (e)
+        {
+            console.log(e.message);
+        }
+    }
+</script>
+</body>
+</html>

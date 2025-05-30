@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%-include('../partials/head_includes')%>
+    <style>
+        .error{
+            color:red;
+        }
+        .card {
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+    </style>
+</head>
+<body onload="fetchData(<%=vehicleId%>)">
+<div class="page-inner">
+    <%-include('../partials/user_header')%>
+    <div class="container mt-5 row justify-content-center mb-3">
+        <div class="card shadow col-md-6">
+            <div class="card-header text-white">
+                <h4 class="text-center" style="color: orangered;">Book a Vehicle</h4>
+            </div>
+            <div class="card-body">
+                <form id="bookingForm">
+                    <input type="hidden" id="vehicleId">
+                    <input type="hidden" id="dealerId">
+                    <input type="hidden" id="days">
+                    <div class="row mb-4">
+                        <!-- Column for Image -->
+                        <div class="col-md-6 text-center">
+                            <img src="" id="veh_image" alt="Vehicle Image" class="img-fluid rounded shadow">
+                        </div>
+                        <!-- Column for Vehicle Details -->
+                        <div class="col-md-6">
+                            <h5>Vehicle Details:-</h5>
+                            <div style="margin-left: 20px;">
+                                <div id="name"> Toyota Camry</div>
+                                <div id="model"> 2023</div>
+                                <div id="sitting"></div>
+                                <h5 id="price"></h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="aadhar_card" class="form-label">Aadhar Card Number</label>
+                        <input type="text" class="form-control" id="aadhar_card" name="aadhar_card" required pattern="\d{12}" maxlength="12" minlength="12" placeholder="Enter 12-digit Aadhar number">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="driving_license" class="form-label">Driving License</label>
+                        <input type="file" class="form-control" id="driving_license" name="driving_license" accept="image/*" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="start_date" class="form-label">Start Date</label>
+                        <input type="date" class="form-control" id="start_date" name="start_date" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="end_date" class="form-label">End Date</label>
+                        <input type="date" class="form-control" id="end_date" name="end_date" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="pickup_location" class="form-label">With Driver</label>
+                        <select class="form-select" id="with_driver" name="with_driver" onchange="calc(this.value)" required>
+                            <option value="">Choose Option</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="pickup_location" class="form-label">Pickup Location</label>
+                        <select class="form-select" id="pickup_location" name="pickup_location" required>
+                            <option value="" disabled selected>Select a city</option>
+                            <option value="NovaRide,Court Road,Amritsar">NovaRide,Court Road,Amritsar</option>
+                            <option value="NovaRide,Court Road,Ludhiana">NovaRide,Court Road,Ludhiana</option>
+                            <option value="NovaRide,Court Road,Jalandhar">NovaRide,Court Road,Jalandhar</option>
+                            <option value="NovaRide,Court Road,Patiala">NovaRide,Court Road,Patiala</option>
+                            <option value="NovaRide,Court Road,Bathinda">NovaRide,Court Road,Bathinda</option>
+                            <option value="NovaRide,Court Road,Mohali">NovaRide,Court Road,Mohali</option>
+                            <option value="NovaRide,Court Road,Delhi">NovaRide,Court Road,Delhi</option>
+                            <option value="NovaRide,GT Road,Mumbai">NovaRide,GT Road,Mumbai</option>
+                            <option value="NovaRide,Court Road,Bangalore">NovaRide,Court Road,Bangalore</option>
+                            <option value="NovaRide,GT Road,Hyderabad">NovaRide,GT Road,Hyderabad</option>
+                            <option value="NovaRide,Court Road,Chennai">NovaRide,Court Road,Chennai</option>
+                            <option value="NovaRide,GT Road,Pune">NovaRide,GT Road,Pune</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="dropoff_location" class="form-label">Dropoff Location</label>
+                        <select class="form-select" id="dropoff_location" name="dropoff_location" required>
+                            <option value="" disabled selected>Select a city</option>
+                            <option value="NovaRide,Court Road,Amritsar">NovaRide,Court Road,Amritsar</option>
+                            <option value="NovaRide,Court Road,Ludhiana">NovaRide,Court Road,Ludhiana</option>
+                            <option value="NovaRide,Court Road,Jalandhar">NovaRide,Court Road,Jalandhar</option>
+                            <option value="NovaRide,Court Road,Patiala">NovaRide,Court Road,Patiala</option>
+                            <option value="NovaRide,Court Road,Bathinda">NovaRide,Court Road,Bathinda</option>
+                            <option value="NovaRide,Court Road,Mohali">NovaRide,Court Road,Mohali</option>
+                            <option value="NovaRide,Court Road,Delhi">NovaRide,Court Road,Delhi</option>
+                            <option value="NovaRide,GT Road,Mumbai">NovaRide,GT Road,Mumbai</option>
+                            <option value="NovaRide,Court Road,Bangalore">NovaRide,Court Road,Bangalore</option>
+                            <option value="NovaRide,GT Road,Hyderabad">NovaRide,GT Road,Hyderabad</option>
+                            <option value="NovaRide,Court Road,Chennai">NovaRide,Court Road,Chennai</option>
+                            <option value="NovaRide,GT Road,Pune">NovaRide,GT Road,Pune</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3 mt-3">
+                        <h2 style="text-align: end">Total: ₹<span id="total_price">0</span></h2>
+                    </div>
+
+                    <button type="button" class="btn-default w-50 offset-md-2" onclick="checkDriver()">Book Now</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <%-include('../partials/footer')%>
+</div>
+<%-include('../partials/body_includes')%>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+
+    async function checkDriver()
+    {
+        var with_driver=document.getElementById("with_driver").value;
+        if(with_driver=='yes')
+        {
+            var res = await fetch('/user/fetchdriver');
+            res = await res.json();
+            var records = res.records;
+            if (res.error || records.length == 0)
+            {
+                Qual.errordb("Error", "Driver Not Available");
+            }
+            else
+            {
+                PayNow();
+            }
+        }
+        else {
+            PayNow();
+        }
+
+    }
+    var price=0;
+    var total=0;
+    document.addEventListener("DOMContentLoaded", function () {
+        const dateInput = document.getElementById("start_date");
+
+        // Set the minimum date to today
+        const today = new Date().toISOString().split("T")[0];
+        dateInput.setAttribute("min", today);
+
+        const dateInput2 = document.getElementById("end_date");
+
+        // Set the minimum date to today
+        dateInput2.setAttribute("min", today);
+    });
+    async function calc(with_driver)
+    {
+        var temp=total;
+        if(with_driver=='yes')
+        {
+            temp+=1000*document.getElementById("days").value;
+            document.getElementById("total_price").innerText=temp;
+        }
+        else
+        {
+            document.getElementById("total_price").innerText=temp;
+        }
+    }
+    $(document).ready(()=>
+    {
+        fetchCategoryFilter();
+    });
+    async function fetchData(vehicleId)
+    {
+
+            var res = await fetch('/user/fetchVehicles/' + vehicleId);
+            res = await res.json();
+            var record = res.records[0];
+            document.getElementById("veh_image").src = record.car_photo;
+            document.getElementById("name").innerHTML = `<b>Name:-</b> ${record.name}`;
+            document.getElementById("model").innerHTML = `<b>Model:-</b> ${record.vehicle_model}`;
+            document.getElementById("sitting").innerHTML = `<b>${record.seat}</b> Seater`;
+            price=record.rent_per_day;
+            document.getElementById("price").innerHTML = `Price:- ${record.rent_per_day}`;
+            document.getElementById("vehicleId").value=record.id;
+            document.getElementById("dealerId").value=record.dealerId;
+    }
+    document.getElementById("end_date").addEventListener("change", function()
+    {
+        var startDate = new Date(document.getElementById("start_date").value);
+        var endDate = new Date(document.getElementById("end_date").value);
+
+        if (startDate && endDate && endDate >= startDate) {
+            var timeDiff = endDate.getTime() - startDate.getTime();
+            var daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24)); // Convert milliseconds to days
+            document.getElementById("days").value = daysDiff; // Set value in input field
+            total=daysDiff*price;
+            document.getElementById("total_price").innerText=total;
+
+        } else {
+            document.getElementById("days").value = 0; // Reset if invalid dates
+            alert("End date must be after the start date.");
+        }
+    });
+    async function booking()
+    {
+        if ($('#bookingForm').valid())
+        {
+            var adharcard = document.getElementById("aadhar_card").value;
+            var driving_licence = document.getElementById("driving_license").files[0];
+            var start_date = document.getElementById("start_date").value;
+            var end_date = document.getElementById("end_date").value;
+            var days=document.getElementById("days").value;
+            var pickup_location = document.getElementById("pickup_location").value;
+            var dropoff_location = document.getElementById("dropoff_location").value;
+            var total_price = document.getElementById("total_price").innerText;
+            console.log(total_price);
+            var vehicleId = document.getElementById("vehicleId").value;
+            var dealerId = document.getElementById("dealerId").value;
+
+            var with_driver=document.getElementById("with_driver").value;
+            var driverId=0;
+            if(with_driver=='yes')
+            {
+                var res=await fetch('/user/fetchdriver');
+                res=await res.json();
+                var records=res.records;
+                if(res.error || records.length==0)
+                {
+                    Qual.errordb("Error","Driver Not Available");
+                }
+                else
+                {
+                    // console.log(records);
+                    driverId=records[0].id;
+                }
+            }
+
+                var formData = new FormData();
+
+                formData.append("adharcard", adharcard);
+                formData.append("start_date", start_date);
+                formData.append("end_date", end_date);
+                formData.append("days", days);
+                formData.append("pickup_location", pickup_location);
+                formData.append("dropoff_location", dropoff_location);
+                formData.append("total_price", total_price);
+                formData.append("vehicleId", vehicleId);
+                formData.append("dealerId", dealerId);
+                formData.append("with_driver", with_driver);
+                formData.append("driverId", driverId);
+
+                formData.append("driving_licence", driving_licence);
+                var res = await fetch("/user/booking",
+                    {
+                        method: "POST",
+                        body: formData
+                    });
+
+                res = await res.json();
+                if (res.error)
+                {
+                    Qual.errordb("Error", res.message);
+                }
+                else
+                {
+
+                    Qual.successdb("Success", res.message);
+                    document.getElementById("bookingForm").reset();
+                    document.getElementById("total_price").innerText = 0;
+                    total=0;
+                    updateStatus(vehicleId,driverId);
+                }
+
+
+        }
+    }
+    const PayNow = () => {
+        if ($('#bookingForm').valid())
+        {
+            let options = {
+                key: "rzp_test_dRWiKHS7zr2Gki",
+                amount: document.getElementById('total_price').innerText * 100,
+                name: "NOVA RIDE",
+                description: "Payment Gateway",
+                image:
+                    "https://cdn3.vectorstock.com/i/1000x1000/98/22/logo-for-grocery-store-vector-21609822.jpg",
+                handler: function (response) {
+                    booking();
+                },
+                prefill: {
+                    name: "",
+                    email: "",
+                },
+                notes: {
+                    address: "",
+                },
+                theme: {
+                    color: "#942436",
+                },
+            };
+
+            var rzp1 = new Razorpay(options);
+            rzp1.open();
+        }
+    }
+    async function updateStatus(vehicleId,driverId)
+    {
+        //update vehicle id
+        var res=await fetch('/user/updateVehicle/'+vehicleId,{
+            method:'PUT',
+            headers:{'Content-Type':'application/json'},
+            body:JSON.stringify(
+                {
+                    status:'Rented'
+                }
+            )
+        });
+
+        res=await res.json();
+        if(res.error)
+        {
+            Qual.errordb("Error",res.message);
+        }
+        else
+        {
+            //update driver
+            if(driverId!=0)
+            {
+                var res = await fetch('/user/updateDriver/' + driverId, {
+                    method: 'PUT',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(
+                        {
+                            status: 'Assigned'
+                        }
+                    )
+                });
+                res = await res.json();
+                if (res.error) {
+                    Qual.errordb("Error", res.message);
+                }
+            }
+            thankyou();
+
+        }
+
+    }
+    function thankyou()
+    {
+        window.location.href='/user/thankyou';
+    }
+
+</script>
+</body>
+</html>

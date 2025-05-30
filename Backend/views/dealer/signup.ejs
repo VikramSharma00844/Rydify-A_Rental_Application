@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%-include('../partials/head_includes')%>
+    <style>
+        .form-select {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 1.5;
+            color: #333;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            appearance: none; /* Removes default styling */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            cursor: pointer;
+            transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+        /* Add arrow indicator */
+        .form-select {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="%23333" d="M2 0L0 2h4z"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 10px;
+            padding-right: 30px;
+        }
+
+        /* Focus and hover styles */
+        .form-select:focus,
+        .form-select:hover {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+            outline: none;
+        }
+
+        /* Disabled state */
+        .form-select:disabled {
+            background-color: #e9ecef;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+        .error{
+            color:red;
+        }
+        .card {
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+<div class="page-inner">
+    <%-include('../partials/header')%>
+
+    <!-- signup-area start -->
+    <div class="container-fluid card col-md-8 mb-3">
+        <h4 align="center" style="color:red;"> Register Dealer </h4>
+        <hr>
+        <div class="log-in-area white-bg ptb-70 small-ptb-30">
+            <div class="container image">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <div class="form-single form-single-right">
+                            <form id="adddealer">
+                                <div class="mb-3">
+                                    <label for="name">Full Name</label>
+                                    <input type="text" name="name" id="name" required data-msg-required="Please Enter Your Full Name" class="form-control" placeholder="Enter Full Name">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email">Email</label>
+                                    <input type="email" name="email" id="email" class="form-control" required data-msg-required="Enter Your Email" placeholder="Enter Email">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="password">Password</label>
+                                    <input type="password" name="password" id="password" class="form-control" required data-msg-required="Enter Your Password" placeholder="Enter Password">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="aadhaar_card">Aadhaar Card</label>
+                                    <input type="text" name="aadhaar_card" id="aadhaar_card" required data-msg-required="Enter Your Aadhaar Card Number" class="form-control" placeholder="Enter Aadhaar Card Number">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="pan_card">PAN Card</label>
+                                    <input type="text" name="pan_card" id="pan_card" required data-msg-required="Enter Your PAN Card Number" class="form-control" placeholder="Enter PAN Card Number">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="mobile">Mobile No.</label>
+                                    <input type="text" name="mobile" id="mobile" required data-msg-required="Please Enter Your Mobile Number" class="form-control" placeholder="Enter Mobile Number">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="gender">Gender</label>
+                                    <select name="gender" id="gender" class="form-select w-100" required data-msg-required="Select Your Gender">
+                                        <option value="">Select Gender</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="photo">Profile Photo</label>
+                                    <input type="file" name="photo" id="photo" required class="form-control">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="address">Address</label>
+                                    <input type="text" name="address" id="address" required data-msg-required="Please Enter Your Address" class="form-control" placeholder="Enter Your Address">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="city">City</label>
+                                    <input type="text" name="city" id="city" required data-msg-required="Please Enter Your City" class="form-control" placeholder="Enter Your City">
+                                </div>
+                                <button type="button" onclick="addDealer()" class='m-3 w-100 btn-default'>
+                                    <i class="fa fa-lock" aria-hidden="true"></i> Sign Up
+                                </button>
+                                <div class="mb-3 ml-3">
+                                    <a href="/dealer/login">Already Registered? Go To Login Page</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- signup-area end -->
+    <%-include('../partials/footer')%>
+</div>
+
+<%-include('../partials/body_includes')%>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    async function addDealer()
+    {
+        if($("#adddealer").valid()) // t/f
+        {
+            var name = document.getElementById("name").value;
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+            var aadhaar_card = document.getElementById("aadhaar_card").value;
+            var pan_card = document.getElementById("pan_card").value;
+            var mobile = document.getElementById("mobile").value;
+            var gender = document.getElementById("gender").value;
+            var photo = document.getElementById("photo").files[0];
+            var address = document.getElementById("address").value;
+            var city = document.getElementById("city").value;
+
+            var formData = new FormData();
+            formData.append('name', name);
+            formData.append('email', email);
+            formData.append('password', password);
+            formData.append('adhar_card', aadhaar_card);
+            formData.append('pan_card', pan_card);
+            formData.append('mobile', mobile);
+            formData.append('gender', gender);
+            formData.append('photo', photo);
+            formData.append('address', address);
+            formData.append('city', city);
+
+            var res=await fetch("/dealer/register",
+                {
+                    method:"POST",
+                    body:formData
+                });
+
+            res=await res.json();
+            console.log(res); // object {error:t/f ,message:" "}
+            if(res.error)
+            {
+                Qual.errordb("Error",res.message);
+            }
+            else
+            {
+
+                Qual.successdb("Success",res.message);
+                document.getElementById("adddealer").reset();
+                setTimeout((c)=>
+                {
+                    window.location.href='/dealer/login';
+                },1000);
+            }
+
+        }
+
+    }
+</script>
+<script src="/checkuser.js"></script>
+<script src="/checkdealer.js"></script>
+<script>
+    $(document).ready(()=>
+    {
+        checkuser();
+        checkdealer();
+        fetchCategoryFilter();
+    });
+</script>
+</body>
+</html>

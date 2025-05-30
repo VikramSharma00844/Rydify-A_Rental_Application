@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+    <%-include('partials/head_includes')%>
+    <style>
+       
+
+    </style>
+</head>
+<body onload="fetchdata('<%=id%>')">
+<%-include('partials/header')%>
+<div class="mt-3 mb-3 bg-section">
+    <div class="container-fluid">
+        <div class="row section-row">
+            <div class="col-lg-12">
+                <!-- Section Title Start -->
+                <div class="section-title">
+                    <h2 class="text-anime-style-3" data-cursor="-opaque" style="color: orangered">VEHICLES</h2>
+                </div>
+                <!-- Section Title End -->
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <!-- Testimonial Slider Start -->
+                <div class="car-details-slider">
+                    <div class="swiper">
+                        <div class="swiper-wrapper" data-cursor-text="Drag" id="viewveh">
+                            <div class="swiper-slide">
+
+                                <div class="perfect-fleet-item">
+
+                                    <div class="image-box">
+                                        <img src="" width='300px' style='height:150px;'alt="">
+                                    </div>
+                                    <div class="perfect-fleet-content">
+
+                                        <div class="perfect-fleet-title">
+                                            <h3>luxury </h3>
+                                            <h2> </h2>
+                                        </div>
+
+                                        <div class="perfect-fleet-body">
+                                            <b>Vehicle Details:- </b><br>&nbsp;
+
+                                        </div>
+
+                                        <div class="perfect-fleet-footer">
+
+                                            <div class="perfect-fleet-pricing">
+                                                <h2><span>/day</span></h2>
+                                            </div>
+                                            <button type="button" class="btn-default">Delete</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+
+                                <div class="perfect-fleet-item">
+
+                                    <div class="image-box">
+                                        <img src="" width='300px' style='height:150px;'alt="">
+                                    </div>
+                                    <div class="perfect-fleet-content">
+
+                                        <div class="perfect-fleet-title">
+                                            <h3>luxury </h3>
+                                            <h2> </h2>
+                                        </div>
+
+                                        <div class="perfect-fleet-body">
+                                            <b>Vehicle Details:- </b><br>&nbsp;
+
+                                        </div>
+
+                                        <div class="perfect-fleet-footer">
+
+                                            <div class="perfect-fleet-pricing">
+                                                <h2><span>/day</span></h2>
+                                            </div>
+                                            <button type="button" class="btn-default">Delete</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+
+                                <div class="perfect-fleet-item">
+
+                                    <div class="image-box">
+                                        <img src="" width='300px' style='height:150px;'alt="">
+                                    </div>
+                                    <div class="perfect-fleet-content">
+
+                                        <div class="perfect-fleet-title">
+                                            <h3>luxury </h3>
+                                            <h2> </h2>
+                                        </div>
+
+                                        <div class="perfect-fleet-body">
+                                            <b>Vehicle Details:- </b><br>&nbsp;
+
+                                        </div>
+
+                                        <div class="perfect-fleet-footer">
+
+                                            <div class="perfect-fleet-pricing">
+                                                <h2><span>/day</span></h2>
+                                            </div>
+                                            <button type="button" class="btn-default">Delete</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+
+                                <div class="perfect-fleet-item">
+
+                                    <div class="image-box">
+                                        <img src="" width='300px' style='height:150px;'alt="">
+                                    </div>
+                                    <div class="perfect-fleet-content">
+
+                                        <div class="perfect-fleet-title">
+                                            <h3>luxury </h3>
+                                            <h2> </h2>
+                                        </div>
+
+                                        <div class="perfect-fleet-body">
+                                            <b>Vehicle Details:- </b><br>&nbsp;
+
+                                        </div>
+
+                                        <div class="perfect-fleet-footer">
+
+                                            <div class="perfect-fleet-pricing">
+                                                <h2><span>/day</span></h2>
+                                            </div>
+                                            <button type="button" class="btn-default">Delete</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+
+                                <div class="perfect-fleet-item">
+
+                                    <div class="image-box">
+                                        <img src="" width='300px' style='height:150px;'alt="">
+                                    </div>
+                                    <div class="perfect-fleet-content">
+
+                                        <div class="perfect-fleet-title">
+                                            <h3>luxury </h3>
+                                            <h2> </h2>
+                                        </div>
+
+                                        <div class="perfect-fleet-body">
+                                            <b>Vehicle Details:- </b><br>&nbsp;
+
+                                        </div>
+
+                                        <div class="perfect-fleet-footer">
+
+                                            <div class="perfect-fleet-pricing">
+                                                <h2><span>/day</span></h2>
+                                            </div>
+                                            <button type="button" class="btn-default">Delete</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="car-details-btn">
+                            <div class="car-button-prev"></div>
+                            <div class="car-button-next"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Testimonial Slider End -->
+            </div>
+        </div>
+    </div>
+</div>
+<%-include('partials/footer')%>
+<%-include('partials/body_includes')%>
+<script src="/checkuser.js"></script>
+<script src="/checkdealer.js"></script>
+<script>
+
+    $(document).ready(()=>
+    {
+        checkuser();
+        checkdealer();
+        fetchCategoryFilter();
+    });
+    async function fetchdata(id)
+    {
+        var res=await fetch('/fetchvehicle/'+id);
+        res=await res.json();
+        var records=res.records;
+        var html=``;
+        for(var x of records)
+        {
+            html+=`<div class="swiper-slide">
+                                <a href="/single_veh/${x.id}" style="color:black;">
+                                <div class="perfect-fleet-item">
+
+                                    <div class="image-box">
+                                        <img src="${x.car_photo}" width='300px' style='height:150px;'alt="">
+                                    </div>
+                                    <div class="perfect-fleet-content">
+
+                                        <div class="perfect-fleet-title">
+                                            <h3> ${x.category.name} </h3>
+                                            <h2>${x.name} ${x.vehicle_model} </h2>
+                                        </div>
+
+                                        <div class="perfect-fleet-body">
+                                            <b>Vehicle Details:- </b>
+                                            <ul>
+                                           <div class="w-100 mt-2"> *Brand:- ${x.vehicle_brand}</div>
+                                            <div class="w-100"> *${x.description}</div>
+                                            </ul>
+                                        </div>
+
+                                        <div class="perfect-fleet-footer">
+
+                                            <div class="perfect-fleet-pricing">
+                                                <h2 class='mb-2'>Rs. ${x.rent_per_day}/day</h2></a>
+                                                <button type="button" class="btn-default" onclick="booknow(${x.id})" >Book Now</button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>`;
+        }
+        document.getElementById("viewveh").innerHTML=html;
+
+    }
+    async function booknow(id)
+    {
+        window.location.href='/user/booking/'+id;
+    }
+
+
+</script>
+</body>
+</html>

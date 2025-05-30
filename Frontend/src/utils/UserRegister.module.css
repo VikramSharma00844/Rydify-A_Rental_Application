@@ -1,0 +1,56 @@
+.form-select {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.5;
+    color: #333;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    appearance: none; /* Removes default styling */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+    transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+/* Add arrow indicator */
+.color
+{
+    color:black;
+    font-weight: bold;
+}
+.form-select {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="%23333" d="M2 0L0 2h4z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 10px;
+    padding-right: 30px;
+}
+
+/* Focus and hover styles */
+.form-select:focus,
+.form-select:hover {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    outline: none;
+}
+
+/* Disabled state */
+.form-select:disabled {
+    background-color: #e9ecef;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+.error{
+    color:red;
+}
+.card {
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}

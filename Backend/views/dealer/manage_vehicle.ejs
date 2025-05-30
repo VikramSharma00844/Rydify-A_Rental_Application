@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <%-include('../partials/head_includes')%>
+    <style>
+        .error
+        {
+            color:red;
+        }
+        .card {
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+    </style>
+</head>
+<body onload="fetchMyVehicle()">
+<%-include('../partials/dealer_header')%>
+<div class="container mt-3 d-flex justify-content-center mb-3">
+    <div class="card col-md-6">
+        <h2 class="text-center mb-4" style="color: orangered;">Add Vehicle</h2>
+        <form id="addvehicle">
+
+            <!-- Select Vehicle Category -->
+            <div class="mb-3">
+                <label for="categoryId" class="form-label">Choose Vehicle Category</label>
+                <select class="form-select" id="categoryId" name="categoryId" onchange="addseats(this.value)" required>
+
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="seats" class="form-label">No of Seats</label>
+                <select class="form-select" id="seats" name="seats" required>
+
+                </select>
+            </div>
+            <!-- Vehicle Details -->
+            <div class="mb-3">
+                <label for="name" class="form-label">Vehicle Name</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="vehicle_brand" class="form-label">Vehicle Brand</label>
+                <input type="text" class="form-control" id="vehicle_brand" name="vehicle_brand" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="vehicle_model" class="form-label">Vehicle Model</label>
+                <input type="text" class="form-control" id="vehicle_model" name="vehicle_model" required>
+            </div>
+            <div class="mb-3">
+                <label for="desc" class="form-label">Vehicle Description</label>
+                <input type="text" class="form-control" id="desc" name="desc" required>
+            </div>
+            <!-- File Uploads -->
+            <div class="mb-3">
+                <label for="car" class="form-label">Vehicle Image </label>
+                <input type="file" class="form-control" id="car" name="car" accept="image/*" required>
+            </div>
+            <div class="mb-3">
+                <label for="rc" class="form-label">RC </label>
+                <input type="file" class="form-control" id="rc" name="rc" accept="image/*" required>
+            </div>
+            <div class="mb-3">
+                <label for="insurance" class="form-label">Insurance Certificate</label>
+                <input type="file" class="form-control" id="insurance" name="insurance" accept="image/*" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="pollution" class="form-label">Pollution Certificate</label>
+                <input type="file" class="form-control" id="pollution" name="pollution" accept="image/*" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="rent_per_day" class="form-label">Rent per Day (₹)</label>
+                <input type="number" class="form-control" id="rent_per_day" name="rent_per_day" required>
+            </div>
+
+            <button type="button"  onclick="addvehicle()" class="btn-default w-50 offset-md-3 mb-3">Submit</button>
+        </form>
+    </div>
+</div>
+
+<!-- Perfect Fleets Section Start -->
+<div class="perfect-fleet bg-section">
+    <div class="container-fluid">
+        <div class="row section-row">
+            <div class="col-lg-12">
+                <!-- Section Title Start -->
+                <div class="section-title">
+<!--                    <h3 class="wow fadeInUp"></h3>-->
+                    <h2 class="text-anime-style-3" data-cursor="-opaque" style="color: orangered">VIEW VEHICLES</h2>
+                </div>
+                <!-- Section Title End -->
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <!-- Testimonial Slider Start -->
+                <div class="car-details-slider">
+                    <div class="swiper">
+                        <div class="swiper-wrapper" data-cursor-text="Drag" id="viewvehicle">
+                            <div class="swiper-slide">
+
+                                <div class="perfect-fleet-item">
+
+                                    <div class="image-box">
+                                        <img src="" width='300px' style='height:150px;'alt="">
+                                    </div>
+                                    <div class="perfect-fleet-content">
+
+                                        <div class="perfect-fleet-title">
+                                            <h3>luxury </h3>
+                                            <h2> </h2>
+                                        </div>
+
+                                        <div class="perfect-fleet-body">
+                                            <b>Vehicle Details:- </b><br>&nbsp;
+
+                                        </div>
+
+                                        <div class="perfect-fleet-footer">
+
+                                            <div class="perfect-fleet-pricing">
+                                                <h2><span>/day</span></h2>
+                                            </div>
+                                            <button type="button" class="btn-default">Delete</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+
+                                <div class="perfect-fleet-item">
+
+                                    <div class="image-box">
+                                        <img src="" width='300px' style='height:150px;'alt="">
+                                    </div>
+                                    <div class="perfect-fleet-content">
+
+                                        <div class="perfect-fleet-title">
+                                            <h3>luxury </h3>
+                                            <h2> </h2>
+                                        </div>
+
+                                        <div class="perfect-fleet-body">
+                                            <b>Vehicle Details:- </b><br>&nbsp;
+
+                                        </div>
+
+                                        <div class="perfect-fleet-footer">
+
+                                            <div class="perfect-fleet-pricing">
+                                                <h2><span>/day</span></h2>
+                                            </div>
+                                            <button type="button" class="btn-default">Delete</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+
+                                <div class="perfect-fleet-item">
+
+                                    <div class="image-box">
+                                        <img src="" width='300px' style='height:150px;'alt="">
+                                    </div>
+                                    <div class="perfect-fleet-content">
+
+                                        <div class="perfect-fleet-title">
+                                            <h3>luxury </h3>
+                                            <h2> </h2>
+                                        </div>
+
+                                        <div class="perfect-fleet-body">
+                                            <b>Vehicle Details:- </b><br>&nbsp;
+
+                                        </div>
+
+                                        <div class="perfect-fleet-footer">
+
+                                            <div class="perfect-fleet-pricing">
+                                                <h2><span>/day</span></h2>
+                                            </div>
+                                            <button type="button" class="btn-default">Delete</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+
+                                <div class="perfect-fleet-item">
+
+                                    <div class="image-box">
+                                        <img src="" width='300px' style='height:150px;'alt="">
+                                    </div>
+                                    <div class="perfect-fleet-content">
+
+                                        <div class="perfect-fleet-title">
+                                            <h3>luxury </h3>
+                                            <h2> </h2>
+                                        </div>
+
+                                        <div class="perfect-fleet-body">
+                                            <b>Vehicle Details:- </b><br>&nbsp;
+
+                                        </div>
+
+                                        <div class="perfect-fleet-footer">
+
+                                            <div class="perfect-fleet-pricing">
+                                                <h2><span>/day</span></h2>
+                                            </div>
+                                            <button type="button" class="btn-default">Delete</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+
+                                <div class="perfect-fleet-item">
+
+                                    <div class="image-box">
+                                        <img src="" width='300px' style='height:150px;'alt="">
+                                    </div>
+                                    <div class="perfect-fleet-content">
+
+                                        <div class="perfect-fleet-title">
+                                            <h3>luxury </h3>
+                                            <h2> </h2>
+                                        </div>
+
+                                        <div class="perfect-fleet-body">
+                                            <b>Vehicle Details:- </b><br>&nbsp;
+
+                                        </div>
+
+                                        <div class="perfect-fleet-footer">
+
+                                            <div class="perfect-fleet-pricing">
+                                                <h2><span>/day</span></h2>
+                                            </div>
+                                            <button type="button" class="btn-default">Delete</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="car-details-btn">
+                            <div class="car-button-prev"></div>
+                            <div class="car-button-next"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Testimonial Slider End -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Perfect Fleets Section End -->
+<%-include('../partials/footer')%>
+<%-include('../partials/body_includes')%>
+<script>
+    async function fetchCategories()
+    {
+        var res=await fetch('/dealer/fetchCategories');
+        res=await res.json();
+        var records=res.records;
+        html=`<option value=''>Select Vehicle Category</option>`;
+        for(var x of records)
+        {
+            html+=`<option value='${x.id}'>${x.name}</option>`;
+        }
+        document.getElementById("categoryId").innerHTML=html;
+    }
+    async function addvehicle()
+    {
+        if($('#addvehicle').valid())
+        {
+            var categoryId = document.getElementById("categoryId").value;
+            var seat=document.getElementById("seats").value;
+            var name = document.getElementById("name").value;
+            var vehicle_brand = document.getElementById("vehicle_brand").value;
+            var vehicle_model = document.getElementById("vehicle_model").value;
+            var description=document.getElementById("desc").value;
+            var car=document.getElementById("car").files[0];
+            var rc = document.getElementById("rc").files[0];
+            var insurance = document.getElementById("insurance").files[0];
+            var pollution = document.getElementById("pollution").files[0];
+            var rent_per_day = document.getElementById("rent_per_day").value;
+
+            var formData = new FormData();
+            formData.append('categoryId', categoryId);
+            formData.append('seat', seat);
+            formData.append('name', name);
+            formData.append('vehicle_brand', vehicle_brand);
+            formData.append('vehicle_model', vehicle_model);
+            formData.append('rent_per_day', rent_per_day);
+            formData.append('description', description);
+            formData.append('car', car);
+            formData.append('rc', rc);
+            formData.append('insurance', insurance);
+            formData.append('pollution', pollution);
+
+            var res=await fetch('/dealer/addvehicle',
+                {
+                    method:'POST',
+                    body:formData,
+                })
+            res=await res.json();
+            if(res.error)
+            {
+                Qual.errordb("Error",res.message);
+            }
+            else
+            {
+
+                Qual.successdb("Success",res.message);
+                document.getElementById('addvehicle').reset();
+                fetchMyVehicle();
+            }
+
+        }
+    }
+    async function addseats(id)
+    {
+        var res=await fetch('/dealer/fetchCategory/'+id);
+        res=await res.json();
+        var record=res.records[0];
+        var html=`<option value=''>Select No of Seats</option>`;
+        if(record.name=='car')
+        {
+            html+=`<option value='5'>5</option>`;
+            html+=`<option value='7'>7</option>`;
+        }
+        else
+        {
+            html+=`<option value='2'>2</option>`;
+        }
+        document.getElementById("seats").innerHTML=html;
+    }
+    async function fetchMyVehicle()
+    {
+        fetchCategories();
+        var res=await fetch('/dealer/fetchMyVehicle');
+        res=await res.json();
+        var records=res.records;
+        console.log(records);
+        var html=``;
+        for(var x of records)
+        {
+            html+=` <div class="swiper-slide">
+
+            <div class="perfect-fleet-item">
+
+            <div class="image-box">
+            <img src="${x.car_photo}" width='300px' style='height:150px;'alt="">
+            </div>
+            <div class="perfect-fleet-content">
+
+            <div class="perfect-fleet-title">
+            <h3> ${x.category.name}</h3>
+            <h2>${x.name} ${x.vehicle_model} </h2>
+            </div>
+
+            <div class="perfect-fleet-body">
+            <b>Vehicle Details:- </b><br>&nbsp;
+                ${x.description}
+            </div>
+
+            <div class="perfect-fleet-footer">
+
+            <div class="perfect-fleet-pricing">
+            <h2>Rs. ${x.rent_per_day}<span>/day</span></h2>
+            </div>
+            <button type="button" class="btn-default" onclick="deleteVehicle(${x.id})">Delete</button>
+            </div>
+            </div>
+            </div>
+            </div>`;
+        }
+        document.getElementById("viewvehicle").innerHTML=html;
+
+    }
+    async function deleteVehicle(id)
+    {
+        try {
+            var res = await fetch("/dealer/delete_vehicle/"+id,{method:'DELETE'});
+            res = await res.json();
+            if(res.error)
+            {
+                Qual.errordb("Error",res.message);
+            }
+            else
+            {
+                Qual.successdb("Success",res.message);
+                fetchMyVehicle();
+            }
+        }
+        catch (e)
+        {
+            console.log(e.message);
+        }
+    }
+</script>
+</body>
+</html>

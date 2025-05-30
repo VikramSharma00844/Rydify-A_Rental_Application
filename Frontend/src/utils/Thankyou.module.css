@@ -1,0 +1,29 @@
+.thank-you-body {
+    background-color: darkgrey;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.thank-you-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.thank-you-icon {
+    font-size: 60px;
+    color: #28a745;
+}
+
+.thank-you-message {
+    margin-top: 20px;
+    color: #333;
+}
+
+.thank-you-button {
+    margin-top: 20px;
+}

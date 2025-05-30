@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <%- include('../partials/head_includes') %>
+    <style>
+        .error {
+            color: red;
+        }
+
+        .card-custom {
+
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease-in-out;
+            overflow: hidden;
+            border-radius: 15px;
+        }
+
+        .card-custom:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 0px 25px rgba(255, 0, 0, 0.9);
+        }
+
+        .card-img-top {
+            width: 400px; /* Set fixed width */
+            height: 300px; /* Set fixed height */
+            object-fit: cover; /* Keep the image properly scaled */
+            border-radius: 10px; /* Optional: Rounded corners */
+            display: block;
+            margin: 0 auto 10px auto; /* Center image */
+        }
+
+        .card {
+            background-color: #f0f0f0;
+            border-radius: 30px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+
+        }
+        .text-highlight,p
+        {
+            color:black;
+        }
+    </style>
+</head>
+<body onload="bookingReq()">
+<%- include('../partials/dealer_header') %>
+<h2 align="center" style="color: orangered; "> View Booking Request </h2>
+<hr>
+<div class="container mt-4">
+    <div class="row justify-content-center" id="cards">
+
+    </div>
+</div>
+<%- include('../partials/footer') %>
+<%- include('../partials/body_includes') %>
+<script src="/js/email2.js"></script>
+<script>
+    async function bookingReq() {
+        var res = await fetch('/dealer/fetchbooking');
+        res = await res.json();
+        var records = res.records;
+        // console.log(records);
+        var html = ``;
+        for (var x of records) {
+            html += `<div class="col-lg-4 col-md-6 mb-4">
+            <div class="card card-custom text-white">
+                <img src="${x.vehicle.car_photo}" class="card-img-top" alt="Dealer Photo">
+                <div class="card-body">
+                    <h4 class="text-highlight">${x.vehicle.name}</h4>
+                    <p><span class="text-highlight">User Name:</span> ${x.user.first_name} ${x.user.last_name}</p>
+                    <p><span class="text-highlight">Email:</span> ${x.user.email}</p>
+                    <p><span class="text-highlight">Aadhar Card:</span> ${x.adharcard}</p>
+                    <p><b>Driving License:</b>
+                    <img src="${x.driving_licence}" class="card-img-top" width="100px" style="height:200px;" alt="Dealer Photo"></p>
+                    <p><span class="text-highlight">Pick-Up Location :</span> ${x.pickup_location}</p>
+                    <p><span class="text-highlight">Dropoff Location :</span> ${x.dropoff_location}</p>
+                    <p><span class="text-highlight">With Driver:</span> ${x.with_driver}</p>
+                   `
+            if (x.booking_status == 'Pending') {
+                html += `<p class="mb-3"><span class="text-highlight">Status:</span> <span class="badge bg-danger text-dark">${x.booking_status}</span></p>
+                    `;
+            } else {
+                html += ` <p class="mb-3"><span class="text-highlight">Status:</span> <span class="badge bg-success text-dark">${x.booking_status}</span></p>`;
+            }
+            html += `<div class="d-flex justify-content-between"> <button class='btn btn-success' onclick='updateBookingReq("Approved", ${JSON.stringify(x)})'>Approve</button>`;
+            html += ` <button class="btn btn-danger " onclick='updateBookingReq("Cancelled",${JSON.stringify(x)})'>Cancel</button></div>`;
+            html += ` </div>
+                </div>
+            </div>
+        </div>`;
+
+        }
+        document.getElementById("cards").innerHTML = html;
+    }
+
+    async function updateBookingReq(booking_status, x) {
+
+        var res = await fetch('/dealer/updatebooking/' + x.id, {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({booking_status: booking_status})
+        });
+        res = await res.json();
+        if (res.error)
+        {
+            Qual.errordb("Error", res.message);
+        }
+        else
+        {
+            Qual.successdb("success", res.message);
+            sendMail(x.user.email, x.user.first_name, booking_status, x.vehicle.name)
+            if(booking_status=='Cancelled')
+            {
+                //change vehicle status to available
+                var res = await fetch('/dealer/updateVehicle/' + x.vehicleId, {
+                    method: 'PUT',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({status:'Available'})
+                });
+                res = await res.json();
+                if (res.error)
+                {
+                    Qual.errordb("Error", res.message);
+                }
+                else
+                {
+                    // Qual.successdb("success", res.message);
+                    var res=await fetch('/dealer/updateDriver/'+x.driverId,{
+                        method:'PUT',
+                        headers:{'Content-Type':'application/json'},
+                        body:JSON.stringify(
+                            {
+                                status:'Available'
+                            }
+                        )
+                    });
+                    res=await res.json();
+                    if(res.error)
+                    {
+                        Qual.errordb("Error",res.message);
+                    }
+                    else
+                    {
+                        bookingReq();
+                    }
+                }
+            }
+        }
+    }
+</script>
+</body>
+</html>

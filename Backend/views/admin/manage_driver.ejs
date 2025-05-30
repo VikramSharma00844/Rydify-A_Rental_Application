@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <%-include('../partials/head_includes')%>
+    <style>
+        .error
+        {
+            color:red;
+        }
+        .card-custom {
+
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease-in-out;
+            overflow: hidden;
+            border-radius: 15px;
+        }
+
+        .card-custom:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 0px 25px rgba(255, 0, 0, 0.9);
+        }
+
+        .card-img-top {
+            width: 400px; /* Set fixed width */
+            height:300px; /* Set fixed height */
+            object-fit: cover; /* Keep the image properly scaled */
+            border-radius: 10px; /* Optional: Rounded corners */
+            display: block;
+            margin: 0 auto 10px auto; /* Center image */
+        }
+        .card {
+            background-color: #f0f0f0;
+            border-radius: 30px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+        }
+    </style>
+</head>
+<body onload="viewDriver()">
+<%-include('../partials/admin_header')%>
+<div class="container mt-3 d-flex justify-content-center mb-3">
+    <div class="card col-md-6">
+        <h2 align="center" style="color: orangered;"> Manage Driver </h2>
+        <hr>
+        <!--add category-->
+        <div class="container-fluid">
+            <div class="log-in-area white-bg small-ptb-30">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <!--  offset-lg-3-->
+                        <div class="offset-md-5">
+                            <div class="form-single form-single-right">
+                                <form id="driver" class="row">
+                                    <div class="col-md-12">
+                                        <label for="name">Name</label>
+                                        <div class="col-md-8">
+                                            <input type="text" id="name" name="name" class="form-control border border-dark w-75" required >
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label for="name">Driving License No</label>
+                                        <div class="col-md-8">
+                                            <input type="text" id="dl" name="dl" class="form-control border border-dark w-75" required >
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <label for="photo" >Photo</label>
+                                        <div class="col-md-8">
+                                            <input type="file" id="photo" name="photo" class="form-control border border-dark w-75" required>
+                                        </div>
+                                    </div>
+
+                                    <button type="button" onclick="AddDriver()" class="btn-default w-25 mt-3 offset-md-1"><span class="button-inner"><i  aria-hidden="true"></i>Submit </span></button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--view category-->
+<h2 align="center" style="color: orangered; margin-top: 30px;"> View Driver </h2>
+<hr>
+<div class="container mt-4">
+    <div class="row justify-content-center" id="cards">
+
+    </div>
+</div>
+<%-include('../partials/footer')%>
+<%-include('../partials/body_includes')%>
+<script>
+    async function AddDriver()
+    {
+        if($("#driver").valid())
+        {
+            var name=document.getElementById("name").value;
+            var dl=document.getElementById("dl").value;
+            // var rent_per_day=document.getElementById("rent_per_day").value;
+            var photo=document.getElementById('photo').files[0];
+            var formdata=new FormData();
+
+            formdata.append('name',name);
+            formdata.append('dl',dl);
+            // formdata.append('rent_per_day',rent_per_day);
+            formdata.append('photo',photo);
+
+            var res=await fetch('/admin/add_driver',
+                {
+                    method:'POST',
+                    body:formdata
+                });
+            res=await res.json();
+            if(res.error)
+            {
+                Qual.errordb("Error",res.message);
+            }
+            else
+            {
+
+                Qual.successdb("Success",res.message);
+                document.getElementById('driver').reset();
+                viewDriver();
+            }
+
+        }
+    }
+    async function viewDriver()
+    {
+        var res=await fetch('/admin/viewDriver');
+        res=await res.json();
+        var records=res.records;
+        console.log(records);
+        var html=``;
+        for(var x of records)
+        {
+            html+=`<div class="col-lg-4 col-md-6 mb-4">
+            <div class="card card-custom card-grey text-white">
+                <img src="${x.photo}" class="card-img-top" alt="Dealer Photo">
+                <div class="card-body">
+                    <h4 class="text-highlight text-uppercase text-center">${x.name}</h4>
+                    <div class="text-black text-center"> Driving License No:- ${x.dl}</div>
+                    <div class="text-black text-center"> Status :- ${x.status}</div>
+                    <div class='offset-4 mt-3 mb-3'>
+                        <button class="btn-default btn-approve" onclick="DeleteDriver(${x.id})">Delete</button>
+                    </div>
+                   </div>
+                </div>
+            </div>
+        </div>`;
+
+        }
+        document.getElementById("cards").innerHTML=html;
+    }
+    async function DeleteDriver(id)
+    {
+        try {
+            //agar hum method type nahi denge to get se delete hoga
+            var res = await fetch("/admin/delete_driver/"+id,{method:'DELETE'});
+            res = await res.json();
+            if(res.error)
+            {
+                Qual.errordb("Error",res.message);
+            }
+            else
+            {
+                Qual.successdb("Success",res.message);
+                viewDriver();
+            }
+        }
+        catch (e)
+        {
+            console.log(e.message);
+        }
+    }
+
+</script>
+</body>
+</html>

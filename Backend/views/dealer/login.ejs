@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%-include('../partials/head_includes')%>
+    <style>
+        .error{
+            color:red;
+        }
+        .card {
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+<div class="page-inner">
+    <%-include('../partials/header')%>
+    <!-- login-area start -->
+    <div class="container-fluid card col-md-6 mb-3">
+        <h4 align="center" style="color:red;"> Dealer Login </h4>
+        <hr>
+        <div class="frequently-questions-area white-bg">
+
+        </div>
+        <div class="log-in-area white-bg ptb-70 small-ptb-30">
+            <div class="container ">
+                <div class="row justify-content-center">
+                    <!--  offset-lg-3-->
+                    <div class="col-lg-6 ">
+                        <div class="form-single form-single-right">
+                            <form id="loginform">
+                                <div class="mb-3">
+                                    <label for="email2">Email</label>
+                                    <input type="email" name="email" id="email2" class="form-control" required data-msg-required="Enter Your Email" placeholder="Enter Email" >
+                                </div>
+                                <div class="mb-3">
+                                    <label for="password">Password</label>
+                                    <input type="password" name="password" id="password" class="form-control" required data-msg-required="Enter Your Password" placeholder="Enter Password" >
+                                </div>
+                                <button type="button" onclick="LoginDealer()" class="w-100 mt-3 mb-3 btn-default"><i class="fa fa-lock" aria-hidden="true"></i>Sign in</button>
+                                <div class="mb-3 "><a href="/dealer/signup" >Not Registered ? Go To Register Page</a></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- login-area end -->
+    <%-include('../partials/footer')%>
+</div>
+<%-include('../partials/body_includes')%>
+<script>
+    async function LoginDealer()
+    {
+        if($("#loginform").valid())
+        {
+            var email=document.getElementById("email2").value;
+            var password=document.getElementById("password").value;
+            var res=await fetch('/dealer/login',
+                {
+                    method:'POST',
+                    headers:{
+                        'Content-Type':"application/json"
+                    },
+                    body:JSON.stringify({
+                        email:email,
+                        password:password
+                    })
+                });
+            res=await res.json();
+            if(res.error)
+            {
+                Qual.errordb("Error",res.message);
+            }
+            else
+            {
+
+                Qual.successdb("Success",res.message);
+                //ViewUser();
+
+                 document.getElementById("loginform").reset();
+                setTimeout((c)=> {
+                        window.location.href = '/dealer/dashboard';
+                    },2000
+                );
+            }
+
+        }
+    }
+</script>
+<script src="/checkuser.js"></script>
+<script src="/checkdealer.js"></script>
+<script>
+
+    $(document).ready(()=>
+    {
+        checkuser();
+        checkdealer();
+        fetchCategoryFilter();
+    });
+</script>
+</body>
+</html>
